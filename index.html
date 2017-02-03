@@ -13,53 +13,66 @@
 	<h1>Map Test</h1>
 	<div id="map"></div>
 	<script>
+  var infoWindow;
+  var map;
 	   var data = [
 	   		{
 	   			'title' : 'Piece 1',
 	   			'lat': '42.3800',
 	   			'long': '-92.114',
 	   			 'color': 'blue',
+           'content' : '<div class="marker"><h2>Title</h2><p>Text for that paragraph.</p></div>'
 	   		},
 	   		{
 	   			'title' : 'Piece 2',
 	   			'lat': '42.4800',
 	   			'long': '-92.114',
 	   			 'color': 'red',
+           'content' : '<div class="marker"><h2>Title</h2><p>Text for that paragraph.</p></div>'
 	   		},
 			{
 				'title' : 'Piece 3',
 	   			'lat': '42.5800',
 	   			'long': '-92.114',
 	   			 'color': 'green',
+           'content' : '<div class="marker"><h2>Title</h2><p>Text for that paragraph.</p></div>'
 	   		},
 	   ];
-      function initMap() {
-        var oma = { lat: 42.38, lng: -92.114};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 8,
-          center: oma
-        });
+    function initMap() {
+      var oma = { lat: 42.38, lng: -92.114};
+       map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: oma
+      });
 
+       infoWindow = new google.maps.InfoWindow({
+        'content': 'test'
+      });
 
-        // See https://developers.google.com/maps/documentation/javascript/adding-a-legend
-        var icons = {
+      // See https://developers.google.com/maps/documentation/javascript/adding-a-legend
+      var icons = {
 
-        }
-
-
-        plotPoints(map, data);
       }
 
-      function plotPoints(map,data) {
+
+
+      plotPoints(map, data, infoWindow);
+    }
+
+      function plotPoints(map, data, infoWindow) {
       	console.log(data);
       	for (var i = 0; i < data.length; i++) {
       		var ll = new google.maps.LatLng(data[i]['lat'], data[i]['long']);
       		var marker = new google.maps.Marker({
       			position: ll,
       			map: map,
-      			title: data[i]['title']
-
-      		})
+      			title: data[i]['title'],
+            content: data[i]['content'],
+      		});
+          marker.addListener('click',function() {
+            infoWindow.setContent(this.content);
+            infoWindow.open(map,this);
+          });
       	}
       }
 
