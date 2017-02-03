@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+       #map {
+        height: 400px;
+        width: 50%;
+       }
+    </style>
+</head>
+<body>
+	<h1>Map Test</h1>
+	<div id="map"></div>
+	<script>
+	   var data = [
+	   		{
+	   			'title' : 'Piece 1',
+	   			'lat': '42.3800',
+	   			'long': '-92.114',
+	   			 'color': 'blue',
+	   		},
+	   		{
+	   			'title' : 'Piece 2',
+	   			'lat': '42.4800',
+	   			'long': '-92.114',
+	   			 'color': 'red',
+	   		},
+			{
+				'title' : 'Piece 3',
+	   			'lat': '42.5800',
+	   			'long': '-92.114',
+	   			 'color': 'green',
+	   		},
+	   ];
+      function initMap() {
+        var oma = { lat: 42.38, lng: -92.114};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: oma
+        });
+
+
+        // See https://developers.google.com/maps/documentation/javascript/adding-a-legend
+        var icons = {
+
+        }
+
+
+        plotPoints(map, data);
+      }
+
+      function plotPoints(map,data) {
+      	console.log(data);
+      	for (var i = 0; i < data.length; i++) {
+      		var ll = new google.maps.LatLng(data[i]['lat'], data[i]['long']);
+      		var marker = new google.maps.Marker({
+      			position: ll,
+      			map: map,
+      			title: data[i]['title']
+
+      		})
+      	}
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApr9M-K5pCen80sDtNv4JjaY9Ync_Q2zY&callback=initMap">
+    </script>
+	
+</body>
+</html>
